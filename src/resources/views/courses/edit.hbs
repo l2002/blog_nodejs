@@ -1,7 +1,7 @@
 <div class='mt-4'>
     <h3>Chỉnh sửa khóa học</h3>
 
-    <form class='mt-4' method='POST' action='/courses/store'>
+    <form class='mt-4' method='POST' action='/courses/{{course._id}}?_method=PUT'>
         <div class='form-group'>
             <label for='name'>Tên khóa học</label>
             <input name='name' value='{{course.name}}' type='text' class='form-control' id='name' />
