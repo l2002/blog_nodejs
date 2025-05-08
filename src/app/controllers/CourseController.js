@@ -24,7 +24,7 @@ class CourseController {
     const course = new Course(formData);
     course
       .save()
-      .then(() => res.redirect('/'))
+      .then(() => res.redirect('/me/stored/courses'))
       .catch(error => {});
   }
 
@@ -48,8 +48,25 @@ class CourseController {
 
   // [DELETE] /courses/:id
   destroy(req, res, next) {
+    Course.delete({ _id: req.params.id })
+      .then(() => res.redirect('/me/stored/courses'))
+      .catch(next);
+  }
+
+  // [DELETE] /courses/:id/force
+  forceDestroy(req, res, next) {
     Course.deleteOne({ _id: req.params.id })
       .then(() => res.redirect('/me/stored/courses'))
+      .catch(next);
+  }
+
+  // [PATCH] /courses/:id/restore
+  restore(req, res, next) {
+    Course.restore({ _id: req.params.id })
+      .then(() => {
+        return Course.updateOne({ _id: req.params.id }, { deleted: false });
+      })
+      .then(() => res.redirect('/me/trash/courses'))
       .catch(next);
   }
 }
