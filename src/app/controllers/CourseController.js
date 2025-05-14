@@ -25,7 +25,7 @@ class CourseController {
     course
       .save()
       .then(() => res.redirect('/me/stored/courses'))
-      .catch(error => {});
+      .catch(next);
   }
 
   // [GET] /courses/:id/edit
@@ -56,7 +56,7 @@ class CourseController {
   // [DELETE] /courses/:id/force
   forceDestroy(req, res, next) {
     Course.deleteOne({ _id: req.params.id })
-      .then(() => res.redirect('/me/stored/courses'))
+      .then(() => res.redirect('/me/trash/courses'))
       .catch(next);
   }
 
