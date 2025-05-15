@@ -1,3 +1,4 @@
 node_modules/
 src/public/css
 src/public/vendor/fontawesome-free-6.7.2-web
+.vercel
