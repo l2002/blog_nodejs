@@ -1,8 +1,18 @@
-const path = require('path');
 const express = require('express');
+const app = express();
+const path = require('path');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const { engine } = require('express-handlebars');
+
+const cors = require('cors');
+const corsConfig = {
+  origin: '*',
+  credential: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+};
+app.use(cors(corsConfig));
+app.options('', cors(corsConfig));
 
 const SortMiddleware = require('./app/middlewares/SortMiddleware');
 
@@ -11,9 +21,6 @@ const db = require('./config/db');
 
 // Connect to DB
 db.connect();
-
-const app = express();
-const port = 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -64,14 +71,16 @@ app.engine(
     },
   })
 );
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
+});
+
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources/views'));
 
 // Routes init
 route(app);
-
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`);
-// });
 
 module.exports = app;
