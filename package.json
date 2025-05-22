@@ -7,7 +7,7 @@
     "start": "node --watch src/index.js",
     "watch": "sass src/resources/scss:src/public/css --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-     "start:all": "concurrently \"npm start\" \"npm run watch\""
+    "dev": "start npm run watch && start npm start"
   },
   "repository": {
     "type": "git",
